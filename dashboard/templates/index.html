@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SentinelGuard | Security Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+        <div>
+            <h1>SentinelGuard</h1>
+            <p>AI Security Monitoring System</p>
+        </div>
+
+        <div id="connection" class="status">
+            Connecting...
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h2>Security Overview</h2>
+            <p>Local security event monitoring</p>
+        </section>
+
+        <!-- LIVE CAMERA -->
+        <section class="camera-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Live Camera</h2>
+                    <p id="camera-message">Connecting to camera...</p>
+                </div>
+
+                <span id="camera-status" class="status">
+                    Starting
+                </span>
+            </div>
+
+            <div class="camera-container">
+                <img
+                    src="http://127.0.0.1:8000/video_feed"
+                    alt="SentinelGuard live camera feed"
+                >
+            </div>
+
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="cards">
+
+            <div class="card">
+                <span>Total Events</span>
+                <h2 id="total">0</h2>
+            </div>
+
+            <div class="card">
+                <span>Unknown Detections</span>
+                <h2 id="unknown">0</h2>
+            </div>
+
+            <div class="card">
+                <span>Authorized Detections</span>
+                <h2 id="authorized">0</h2>
+            </div>
+
+            <div class="card">
+                <span>Security Alerts</span>
+                <h2 id="alerts">0</h2>
+            </div>
+
+        </section>
+
+        <!-- STEP 11: EVIDENCE GALLERY -->
+        <section class="evidence-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Evidence Gallery</h2>
+                    <p>Saved unknown-person detection snapshots</p>
+                </div>
+
+                <div class="gallery-actions">
+                    <span id="evidence-count" class="status">
+                        0 snapshots
+                    </span>
+
+                    <button id="refresh-evidence">
+                        Refresh Gallery
+                    </button>
+                </div>
+            </div>
+
+            <div id="evidence-gallery" class="evidence-grid">
+
+                <div class="gallery-message">
+                    Loading saved evidence...
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- IMAGE PREVIEW MODAL -->
+        <div id="image-modal" class="image-modal" aria-hidden="true">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Evidence Preview</h2>
+
+                    <button
+                        type="button"
+                        id="close-modal"
+                        class="close-button"
+                        aria-label="Close image preview"
+                    >
+                        &times;
+                    </button>
+                </div>
+
+                <img
+                    id="modal-image"
+                    src=""
+                    alt="Selected security evidence"
+                >
+
+                <div id="modal-details" class="modal-details"></div>
+
+                <a
+                    id="download-evidence"
+                    class="download-button"
+                    href="#"
+                    download
+                >
+                    Download Evidence
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- RECENT EVENTS -->
+        <section class="events-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Recent Events</h2>
+                    <p>Latest events recorded in SQLite</p>
+                </div>
+
+                <button id="refresh-dashboard">
+                    Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Event</th>
+                            <th>Person</th>
+                            <th>Track ID</th>
+                            <th>Timestamp</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="events">
+                        <tr>
+                            <td colspan="6">Loading events...</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+        <footer>
+            SentinelGuard · Local Database · Offline Mode
+            <p id="last-updated">Waiting for data...</p>
+        </footer>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
